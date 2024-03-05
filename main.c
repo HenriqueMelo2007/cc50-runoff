@@ -9,6 +9,7 @@ typedef struct {
 } Candidate;
 
 void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates);
+void initializeCandidates (Candidate candidates[], int numberOfCandidates, char const *argv[]);
 
 
 int main(int argc, char const *argv[])
@@ -27,10 +28,7 @@ int main(int argc, char const *argv[])
 
   Candidate candidates[numberOfCandidates];
 
-  for (int i = 0; i < numberOfCandidates; i++) {
-    strcpy(candidates[i].candidateName, argv[i + 1]);
-    candidates[i].votes = 0;
-  }
+  initializeCandidates(candidates, numberOfCandidates, argv);  
 
   char votersVotes[voters][3][50];
 
@@ -44,6 +42,13 @@ int main(int argc, char const *argv[])
 
   
   return 0;
+}
+
+void initializeCandidates (Candidate candidates[], int numberOfCandidates, char const *argv[]) {
+  for (int i = 0; i < numberOfCandidates; i++) {
+    strcpy(candidates[i].candidateName, argv[i + 1]);
+    candidates[i].votes = 0;
+  }
 }
 
 void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates) {
@@ -69,5 +74,4 @@ void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters,
 
     printf("\n");
   }
-
 }
