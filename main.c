@@ -8,11 +8,14 @@ typedef struct {
   int votes;
 } Candidate;
 
+void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates);
+
+
 int main(int argc, char const *argv[])
 {
-
+// mudar numero depois !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   if (argc < 2) {
-    printf("Define at least one candidate.");
+    printf("Define at least three candidates.");
     return 1;
   }
   
@@ -31,7 +34,19 @@ int main(int argc, char const *argv[])
 
   char votersVotes[voters][3][50];
 
+  voteIsValid(votersVotes, candidates, voters, numberOfCandidates);
 
+
+  
+  
+
+
+
+  
+  return 0;
+}
+
+void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates) {
   for (int i = 0; i < voters; i++) {
 
     for (int indexVotes = 0; indexVotes < 3; indexVotes++) {
@@ -42,7 +57,6 @@ int main(int argc, char const *argv[])
       int stringEquality = strcmp(votersVotes[i][indexVotes], candidates[ii].candidateName);
      
         if ( stringEquality == 0 ) {
-          candidates[ii].votes += 1;
           break;
         } else if ( ii == numberOfCandidates - 1 ) {
           printf("Invalid vote\n");
@@ -56,8 +70,4 @@ int main(int argc, char const *argv[])
     printf("\n");
   }
 
-
-
-  
-  return 0;
 }
