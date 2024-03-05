@@ -37,6 +37,20 @@ int main(int argc, char const *argv[])
     for (int indexVotes = 0; indexVotes < 3; indexVotes++) {
       printf("Rank %i: ", indexVotes + 1);
       scanf("%s", votersVotes[i][indexVotes]);
+
+      for (int ii = 0; ii < numberOfCandidates; ii++) {
+      int stringEquality = strcmp(votersVotes[i][indexVotes], candidates[ii].candidateName);
+     
+        if ( stringEquality == 0 ) {
+          candidates[ii].votes += 1;
+          break;
+        } else if ( ii == numberOfCandidates - 1 ) {
+          printf("Invalid vote\n");
+          indexVotes -= 1;
+          break;
+        }
+      }
+
     }
 
     printf("\n");
