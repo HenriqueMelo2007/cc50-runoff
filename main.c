@@ -15,7 +15,7 @@ void initializeCandidates (Candidate candidates[], int numberOfCandidates, char 
 int main(int argc, char const *argv[])
 {
 // mudar numero depois !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  if (argc < 2) {
+  if (argc != 2) {
     printf("Define at least three candidates.");
     return 1;
   }
