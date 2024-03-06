@@ -10,13 +10,13 @@ typedef struct {
 
 void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates);
 void initializeCandidates (Candidate candidates[], int numberOfCandidates, char const *argv[]);
+void assigningVotes (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates);
 
 
 int main(int argc, char const *argv[])
 {
-// mudar numero depois !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  if (argc != 2) {
-    printf("Define at least three candidates.");
+  if (argc != 4) {
+    printf("Define three candidates.");
     return 1;
   }
   
@@ -34,26 +34,13 @@ int main(int argc, char const *argv[])
 
   voteIsValid(votersVotes, candidates, voters, numberOfCandidates);
 
+  assigningVotes(votersVotes, candidates, voters, numberOfCandidates);
+
  
 
-  for (int voter = 0; voter < voters; voter++) {
-    char votersOfVoter[3][50];
-    
-    for (int i = 0; i < 3; i++) {
-      strcpy(votersOfVoter[i], votersVotes[voter][i]);
-    }
-
-    for (int rank = 0; rank < 3; rank++) {
-      printf("%s", votersOfVoter[rank]);
-    }
-
-  }
-
-
-
-  
   return 0;
 }
+
 
 
 void initializeCandidates (Candidate candidates[], int numberOfCandidates, char const *argv[]) {
@@ -88,6 +75,33 @@ void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters,
   }
 }
 
-void assigningVotes () {}
+void assigningVotes (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates) {
+  for (int voter = 0; voter < voters; voter++) {
+    char votersOfVoter[3][50];
+    
+    for (int i = 0; i < 3; i++) {
+      strcpy(votersOfVoter[i], votersVotes[voter][i]);
+    }
 
-void checkIfThereIsAWinner () {}
+    for (int rank = 0; rank < 3; rank++) {
+      char voteInOrder[50];
+      int stopLoop = 1;
+      strcpy(voteInOrder, votersOfVoter[rank]);
+
+      for (int possibleVoteOwner = 0; possibleVoteOwner < numberOfCandidates; possibleVoteOwner++) {
+        int voteOwner = strcmp(voteInOrder, candidates[possibleVoteOwner].candidateName);
+
+        if ( voteOwner == 0 ) {
+          candidates[possibleVoteOwner].votes += 1;
+          stopLoop = 0;
+          break;
+        }
+      }
+
+      if ( stopLoop == 0 ) {
+        break;
+      }
+
+    }
+  }
+}
