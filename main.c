@@ -34,15 +34,27 @@ int main(int argc, char const *argv[])
 
   voteIsValid(votersVotes, candidates, voters, numberOfCandidates);
 
+ 
 
-  
-  
+  for (int voter = 0; voter < voters; voter++) {
+    char votersOfVoter[3][50];
+    
+    for (int i = 0; i < 3; i++) {
+      strcpy(votersOfVoter[i], votersVotes[voter][i]);
+    }
+
+    for (int rank = 0; rank < 3; rank++) {
+      printf("%s", votersOfVoter[rank]);
+    }
+
+  }
 
 
 
   
   return 0;
 }
+
 
 void initializeCandidates (Candidate candidates[], int numberOfCandidates, char const *argv[]) {
   for (int i = 0; i < numberOfCandidates; i++) {
@@ -75,3 +87,7 @@ void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters,
     printf("\n");
   }
 }
+
+void assigningVotes () {}
+
+void checkIfThereIsAWinner () {}
