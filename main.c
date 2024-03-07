@@ -8,20 +8,24 @@ typedef struct {
   int votes;
 } Candidate;
 
+int numberOfCandidates;
+
 void initializeCandidates (Candidate candidates[], int numberOfCandidates, char const *argv[]);
-void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates);
-void assigningVotes (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates);
+void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates);
+void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates);
+
+int const oi = 2;
 
 
 int main(int argc, char const *argv[])
 {
-  if (argc != 4) {
-    printf("Define three candidates.");
+  if (argc < 3) {
+    printf("Define at least two candidates.");
     return 1;
   }
   
   int voters;
-  int numberOfCandidates = argc - 1;
+  numberOfCandidates = argc - 1;
 
   printf("Number of voters: ");
   scanf("%i", &voters);
@@ -30,9 +34,9 @@ int main(int argc, char const *argv[])
 
   initializeCandidates(candidates, numberOfCandidates, argv);  
 
-  char votersVotes[voters][3][50];
+  char votersVotes[voters][numberOfCandidates][50];
 
-  voteIsValid(votersVotes, candidates, voters, numberOfCandidates);
+  receivesVotesChecksIfItIsValid(votersVotes, candidates, voters, numberOfCandidates);
 
   assigningVotes(votersVotes, candidates, voters, numberOfCandidates);
 
@@ -50,10 +54,10 @@ void initializeCandidates (Candidate candidates[], int numberOfCandidates, char 
   }
 }
 
-void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates) {
+void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates) {
   for (int i = 0; i < voters; i++) {
 
-    for (int indexVotes = 0; indexVotes < 3; indexVotes++) {
+    for (int indexVotes = 0; indexVotes < numberOfCandidates; indexVotes++) {
       printf("Rank %i: ", indexVotes + 1);
       scanf("%s", votersVotes[i][indexVotes]);
 
@@ -75,15 +79,15 @@ void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters,
   }
 }
 
-void assigningVotes (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates) {
+void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates) {
   for (int voter = 0; voter < voters; voter++) {
-    char votersOfVoter[3][50];
+    char votersOfVoter[numberOfCandidates][50];
     
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < numberOfCandidates; i++) {
       strcpy(votersOfVoter[i], votersVotes[voter][i]);
     }
 
-    for (int rank = 0; rank < 3; rank++) {
+    for (int rank = 0; rank < numberOfCandidates; rank++) {
       char voteInOrder[50];
       int stopLoop = 1;
       strcpy(voteInOrder, votersOfVoter[rank]);
