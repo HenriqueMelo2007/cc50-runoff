@@ -40,8 +40,30 @@ int main(int argc, char const *argv[])
 
   assigningVotes(votersVotes, candidates, voters, numberOfCandidates);
 
+  int *indexMostVotedCandidate = malloc(sizeof(int));
+  int *votesMostVotedCandidate = malloc(sizeof(int));
+
+  *indexMostVotedCandidate = 0;
+  *votesMostVotedCandidate = 0;
+
+
+  for (int allCandidatesOneByOne = 0; allCandidatesOneByOne < numberOfCandidates; allCandidatesOneByOne++) {
+    int votesOfThisCandidate = candidates[allCandidatesOneByOne].votes;
+
+    if ( votesOfThisCandidate > *votesMostVotedCandidate ) {
+      *indexMostVotedCandidate = allCandidatesOneByOne;
+      *votesMostVotedCandidate = votesOfThisCandidate;
+    }
+  }
+
+  if ( *votesMostVotedCandidate > (float) voters / 2 ) {
+    printf("The winner is: %s", candidates[*indexMostVotedCandidate].candidateName);
+  }
+
  
 
+  free(indexMostVotedCandidate);
+  free(votesMostVotedCandidate);
   return 0;
 }
 
@@ -118,3 +140,5 @@ void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candi
     }
   }
 }
+
+void mostVotedAndLeastVoted () {}
