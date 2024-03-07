@@ -62,12 +62,21 @@ void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50],
       scanf("%s", votersVotes[i][indexVotes]);
 
       for (int ii = 0; ii < numberOfCandidates; ii++) {
-      int stringEquality = strcmp(votersVotes[i][indexVotes], candidates[ii].candidateName);
-     
-        if ( stringEquality == 0 ) {
+        int candidateExists = strcmp(votersVotes[i][indexVotes], candidates[ii].candidateName);
+        int thereIsRepeatedVote = 1;
+
+        for (int isRepeated = 0; isRepeated < indexVotes; isRepeated++) {
+          int possibleRepeatedVote = strcmp(votersVotes[i][indexVotes], votersVotes[i][isRepeated]);
+
+          if ( possibleRepeatedVote == 0 ) {
+            thereIsRepeatedVote = 0;
+          }
+        }
+
+        if ( candidateExists == 0 && thereIsRepeatedVote != 0 ) {
           break;
         } else if ( ii == numberOfCandidates - 1 ) {
-          printf("Invalid vote\n");
+          printf("Invalid or repeated vote\n");
           indexVotes -= 1;
           break;
         }
