@@ -8,8 +8,8 @@ typedef struct {
   int votes;
 } Candidate;
 
-void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates);
 void initializeCandidates (Candidate candidates[], int numberOfCandidates, char const *argv[]);
+void voteIsValid (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates);
 void assigningVotes (char votersVotes[][3][50], Candidate candidates[], int voters, int numberOfCandidates);
 
 
