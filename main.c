@@ -14,8 +14,6 @@ void initializeCandidates (Candidate candidates[], int numberOfCandidates, char 
 void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates);
 void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates);
 
-int const oi = 2;
-
 
 int main(int argc, char const *argv[])
 {
