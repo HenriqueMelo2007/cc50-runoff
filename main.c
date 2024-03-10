@@ -13,6 +13,7 @@ int numberOfCandidates;
 void initializeCandidates (Candidate candidates[], int numberOfCandidates, char const *argv[]);
 void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates);
 void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates);
+void isThereAWinner (Candidate candidates[], int voters, int *indexMostVotedCandidate, int *votesMostVotedCandidate);
 
 
 int main(int argc, char const *argv[])
@@ -44,21 +45,9 @@ int main(int argc, char const *argv[])
   *indexMostVotedCandidate = 0;
   *votesMostVotedCandidate = 0;
 
+  isThereAWinner (candidates, voters, indexMostVotedCandidate, votesMostVotedCandidate);
 
-  for (int allCandidatesOneByOne = 0; allCandidatesOneByOne < numberOfCandidates; allCandidatesOneByOne++) {
-    int votesOfThisCandidate = candidates[allCandidatesOneByOne].votes;
 
-    if ( votesOfThisCandidate > *votesMostVotedCandidate ) {
-      *indexMostVotedCandidate = allCandidatesOneByOne;
-      *votesMostVotedCandidate = votesOfThisCandidate;
-    }
-  }
-
-  if ( *votesMostVotedCandidate > (float) voters / 2 ) {
-    printf("The winner is: %s", candidates[*indexMostVotedCandidate].candidateName);
-  }
-
- 
 
   free(indexMostVotedCandidate);
   free(votesMostVotedCandidate);
@@ -139,4 +128,17 @@ void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candi
   }
 }
 
-void mostVotedAndLeastVoted () {}
+void isThereAWinner (Candidate candidates[], int voters, int *indexMostVotedCandidate, int *votesMostVotedCandidate) {
+  for (int allCandidatesOneByOne = 0; allCandidatesOneByOne < numberOfCandidates; allCandidatesOneByOne++) {
+    int votesOfThisCandidate = candidates[allCandidatesOneByOne].votes;
+
+    if ( votesOfThisCandidate > *votesMostVotedCandidate ) {
+      *indexMostVotedCandidate = allCandidatesOneByOne;
+      *votesMostVotedCandidate = votesOfThisCandidate;
+    }
+  }
+
+  if ( *votesMostVotedCandidate > (float) voters / 2 ) {
+    printf("The winner is: %s", candidates[*indexMostVotedCandidate].candidateName);
+  }
+}
