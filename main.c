@@ -12,7 +12,7 @@ int numberOfCandidates;
 
 void initializeCandidates (Candidate candidates[], int numberOfCandidates, char const *argv[]);
 void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates);
-void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates);
+void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates, int numberOfCandidatesRemoved, char nameRemovedCandidates[]);
 void isThereAWinner (Candidate candidates[], int voters, int *indexMostVotedCandidate, int *votesMostVotedCandidate);
 void candidateFewestVotes (Candidate candidates[], int *votesFewestVotedCandidate);
 void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, char nameRemovedCandidates[], int *numberOfCandidatesRemoved);
@@ -37,19 +37,19 @@ int main(int argc, char const *argv[])
 
   char votersVotes[voters][numberOfCandidates][50];
 
-  receivesVotesChecksIfItIsValid(votersVotes, candidates, voters, numberOfCandidates);
-
-  assigningVotes(votersVotes, candidates, voters, numberOfCandidates);
-
   int indexMostVotedCandidate = 0;
   int votesMostVotedCandidate = 0;
-
-  isThereAWinner (candidates, voters, &indexMostVotedCandidate, &votesMostVotedCandidate);
 
   char nameRemovedCandidates[numberOfCandidates][50];
   int numberOfCandidatesRemoved = 0;
 
   int votesFewestVotedCandidate = candidates[0].votes;
+
+  receivesVotesChecksIfItIsValid(votersVotes, candidates, voters, numberOfCandidates);
+
+  assigningVotes(votersVotes, candidates, voters, numberOfCandidates, numberOfCandidatesRemoved, nameRemovedCandidates);
+
+  isThereAWinner (candidates, voters, &indexMostVotedCandidate, &votesMostVotedCandidate);
 
   candidateFewestVotes(candidates, &votesFewestVotedCandidate);
 
@@ -102,7 +102,7 @@ void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50],
   }
 }
 
-void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates) {
+void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates, int numberOfCandidatesRemoved, char nameRemovedCandidates[]) {
   for (int voter = 0; voter < voters; voter++) {
     
     char votersOfVoter[numberOfCandidates][50];
@@ -115,7 +115,20 @@ void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candi
       int stopLoop = 1;
       strcpy(voteInOrder, votersOfVoter[rank]);
 
+      for (int isValidOwner = 0; isValidOwner < numberOfCandidatesRemoved; isValidOwner++) {
+        int isNotValidOwner = strcmp(voteInOrder, nameRemovedCandidates[isValidOwner]);
+
+        if ( isNotValidOwner == 0 ) {
+          stopLoop = 0;
+          break;
+        }
+      }
+
       for (int possibleVoteOwner = 0; possibleVoteOwner < numberOfCandidates; possibleVoteOwner++) {
+        if ( stopLoop == 0 ) {
+        break;
+        }
+
         int voteOwner = strcmp(voteInOrder, candidates[possibleVoteOwner].candidateName);
 
         if ( voteOwner == 0 ) {
