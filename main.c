@@ -14,6 +14,7 @@ void initializeCandidates (Candidate candidates[], int numberOfCandidates, char 
 void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates);
 void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates);
 void isThereAWinner (Candidate candidates[], int voters, int *indexMostVotedCandidate, int *votesMostVotedCandidate);
+void candidateFewestVotes (Candidate candidates[], int *votesFewestVotedCandidate);
 
 
 int main(int argc, char const *argv[])
@@ -48,20 +49,11 @@ int main(int argc, char const *argv[])
 
   int indexFewestVotedCandidates[numberOfCandidates - 2];
   int votesFewestVotedCandidate = candidates[0].votes;
-  int candidatesTiedFewestVotes = 0;
+
+  candidateFewestVotes(candidates, &votesFewestVotedCandidate);
 
 
-  for (int allCandidatesOneByOne = 0; allCandidatesOneByOne < numberOfCandidates; allCandidatesOneByOne++) {
-    int votesOfThisCandidate = candidates[allCandidatesOneByOne].votes;
-    
-
-    if ( votesOfThisCandidate < votesFewestVotedCandidate ) {
-      votesFewestVotedCandidate = votesOfThisCandidate;
-      indexFewestVotedCandidates[candidatesTiedFewestVotes] = allCandidatesOneByOne;
-
-      for () {}
-    } else if ( votesOfThisCandidate == votesFewestVotedCandidate ) {}
-  }
+  
 
 
   return 0;
@@ -156,4 +148,12 @@ void isThereAWinner (Candidate candidates[], int voters, int *indexMostVotedCand
   } else { removeCandidateFewestVotes(); }
 }
 
-void removeCandidateFewestVotes () {}
+void candidateFewestVotes (Candidate candidates[], int *votesFewestVotedCandidate) {
+  for (int allCandidatesOneByOne = 0; allCandidatesOneByOne < numberOfCandidates; allCandidatesOneByOne++) {
+    int votesOfThisCandidate = candidates[allCandidatesOneByOne].votes;
+    
+    if ( votesOfThisCandidate < votesFewestVotedCandidate ) {
+      votesFewestVotedCandidate = votesOfThisCandidate;
+    }
+  }
+}
