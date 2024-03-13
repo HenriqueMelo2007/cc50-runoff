@@ -14,10 +14,10 @@ int numberOfCandidates;
 
 void initializeCandidates (Candidate candidates[], int numberOfCandidates, char const *argv[]);
 void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates);
-void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates, int numberOfCandidatesRemoved, char nameRemovedCandidates[]);
+void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates, int numberOfCandidatesRemoved, char nameRemovedCandidates[][50]);
 void isThereAWinner (Candidate candidates[], int voters, int *indexMostVotedCandidate, int *votesMostVotedCandidate);
 void candidateFewestVotes (Candidate candidates[], int *votesFewestVotedCandidate);
-void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, char nameRemovedCandidates[], int *numberOfCandidatesRemoved, int numberOfCandidates);
+void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, char nameRemovedCandidates[][50], int *numberOfCandidatesRemoved, int numberOfCandidates);
 
 
 int main(int argc, char const *argv[])
@@ -103,7 +103,7 @@ void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50],
   }
 }
 
-void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates, int numberOfCandidatesRemoved, char nameRemovedCandidates[]) {
+void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates, int numberOfCandidatesRemoved, char nameRemovedCandidates[][50]) {
   for (int recountingFromZero = 0; recountingFromZero < numberOfCandidates; recountingFromZero++) {
     candidates[recountingFromZero].votes = 0;
   }
@@ -179,7 +179,7 @@ void candidateFewestVotes (Candidate candidates[], int *votesFewestVotedCandidat
   }
 }
 
-void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, char nameRemovedCandidates[], int *numberOfCandidatesRemoved, int numberOfCandidates) {
+void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, char nameRemovedCandidates[][50], int *numberOfCandidatesRemoved, int numberOfCandidates) {
   for (int allCandidatesOneByOne = 0; allCandidatesOneByOne < numberOfCandidates; allCandidatesOneByOne++) {
     int votesOfThisCandidate = candidates[allCandidatesOneByOne].votes;
 
@@ -189,8 +189,10 @@ void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, 
     }
   }
 
-  if ( *numberOfCandidatesRemoved == numberOfCandidates || *numberOfCandidatesRemoved == numberOfCandidates - 1 ) {
+  if ( continueDoing ) {
+    if ( *numberOfCandidatesRemoved == numberOfCandidates || *numberOfCandidatesRemoved == numberOfCandidates - 1 ) {
     printf("It is a draw\n");
     continueDoing = false;
+    }
   }
 }
