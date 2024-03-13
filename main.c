@@ -8,6 +8,8 @@ typedef struct {
   int votes;
 } Candidate;
 
+bool continueDoing = true;
+
 int numberOfCandidates;
 
 void initializeCandidates (Candidate candidates[], int numberOfCandidates, char const *argv[]);
@@ -15,7 +17,7 @@ void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50],
 void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates, int numberOfCandidatesRemoved, char nameRemovedCandidates[]);
 void isThereAWinner (Candidate candidates[], int voters, int *indexMostVotedCandidate, int *votesMostVotedCandidate);
 void candidateFewestVotes (Candidate candidates[], int *votesFewestVotedCandidate);
-void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, char nameRemovedCandidates[], int *numberOfCandidatesRemoved);
+void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, char nameRemovedCandidates[], int *numberOfCandidatesRemoved, int numberOfCandidates);
 
 
 int main(int argc, char const *argv[])
@@ -47,14 +49,13 @@ int main(int argc, char const *argv[])
 
   receivesVotesChecksIfItIsValid(votersVotes, candidates, voters, numberOfCandidates);
 
-  assigningVotes(votersVotes, candidates, voters, numberOfCandidates, numberOfCandidatesRemoved, nameRemovedCandidates);
-
-  isThereAWinner (candidates, voters, &indexMostVotedCandidate, &votesMostVotedCandidate);
-
-  candidateFewestVotes(candidates, &votesFewestVotedCandidate);
-
-  removingCandidates (candidates, votesFewestVotedCandidate, nameRemovedCandidates, &numberOfCandidatesRemoved);
-
+  do {
+    assigningVotes(votersVotes, candidates, voters, numberOfCandidates, numberOfCandidatesRemoved, nameRemovedCandidates);
+    isThereAWinner (candidates, voters, &indexMostVotedCandidate, &votesMostVotedCandidate);
+    candidateFewestVotes(candidates, &votesFewestVotedCandidate);
+    removingCandidates (candidates, votesFewestVotedCandidate, nameRemovedCandidates, &numberOfCandidatesRemoved, numberOfCandidates);
+  } while (continueDoing);
+  
 
   return 0;
 }
@@ -162,10 +163,13 @@ void isThereAWinner (Candidate candidates[], int voters, int *indexMostVotedCand
 
   if ( *votesMostVotedCandidate > (float) voters / 2 ) {
     printf("The winner is: %s", candidates[*indexMostVotedCandidate].candidateName);
+    continueDoing = false;
   }
 }
 
 void candidateFewestVotes (Candidate candidates[], int *votesFewestVotedCandidate) {
+  *votesFewestVotedCandidate = candidates[0].votes;
+
   for (int allCandidatesOneByOne = 0; allCandidatesOneByOne < numberOfCandidates; allCandidatesOneByOne++) {
     int votesOfThisCandidate = candidates[allCandidatesOneByOne].votes;
     
@@ -175,7 +179,7 @@ void candidateFewestVotes (Candidate candidates[], int *votesFewestVotedCandidat
   }
 }
 
-void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, char nameRemovedCandidates[], int *numberOfCandidatesRemoved) {
+void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, char nameRemovedCandidates[], int *numberOfCandidatesRemoved, int numberOfCandidates) {
   for (int allCandidatesOneByOne = 0; allCandidatesOneByOne < numberOfCandidates; allCandidatesOneByOne++) {
     int votesOfThisCandidate = candidates[allCandidatesOneByOne].votes;
 
@@ -183,5 +187,10 @@ void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, 
       strcpy(nameRemovedCandidates[*numberOfCandidatesRemoved], candidates[allCandidatesOneByOne].candidateName);
       *numberOfCandidatesRemoved++;
     }
+  }
+
+  if ( *numberOfCandidatesRemoved == numberOfCandidates || *numberOfCandidatesRemoved == numberOfCandidates - 1 ) {
+    printf("It is a draw\n");
+    continueDoing = false;
   }
 }
