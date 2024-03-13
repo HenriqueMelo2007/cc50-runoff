@@ -39,18 +39,31 @@ int main(int argc, char const *argv[])
 
   assigningVotes(votersVotes, candidates, voters, numberOfCandidates);
 
-  int *indexMostVotedCandidate = malloc(sizeof(int));
-  int *votesMostVotedCandidate = malloc(sizeof(int));
+  int indexMostVotedCandidate = 0;
+  int votesMostVotedCandidate = 0;
 
-  *indexMostVotedCandidate = 0;
-  *votesMostVotedCandidate = 0;
+  isThereAWinner (candidates, voters, &indexMostVotedCandidate, &votesMostVotedCandidate);
 
-  isThereAWinner (candidates, voters, indexMostVotedCandidate, votesMostVotedCandidate);
+  int indexRemovedCandidates[numberOfCandidates - 1];
+
+  int indexFewestVotedCandidates[numberOfCandidates - 2];
+  int votesFewestVotedCandidate = candidates[0].votes;
+  int candidatesTiedFewestVotes = 0;
 
 
+  for (int allCandidatesOneByOne = 0; allCandidatesOneByOne < numberOfCandidates; allCandidatesOneByOne++) {
+    int votesOfThisCandidate = candidates[allCandidatesOneByOne].votes;
+    
 
-  free(indexMostVotedCandidate);
-  free(votesMostVotedCandidate);
+    if ( votesOfThisCandidate < votesFewestVotedCandidate ) {
+      votesFewestVotedCandidate = votesOfThisCandidate;
+      indexFewestVotedCandidates[candidatesTiedFewestVotes] = allCandidatesOneByOne;
+
+      for () {}
+    } else if ( votesOfThisCandidate == votesFewestVotedCandidate ) {}
+  }
+
+
   return 0;
 }
 
@@ -99,8 +112,8 @@ void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50],
 
 void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates) {
   for (int voter = 0; voter < voters; voter++) {
-    char votersOfVoter[numberOfCandidates][50];
     
+    char votersOfVoter[numberOfCandidates][50];
     for (int i = 0; i < numberOfCandidates; i++) {
       strcpy(votersOfVoter[i], votersVotes[voter][i]);
     }
@@ -140,5 +153,7 @@ void isThereAWinner (Candidate candidates[], int voters, int *indexMostVotedCand
 
   if ( *votesMostVotedCandidate > (float) voters / 2 ) {
     printf("The winner is: %s", candidates[*indexMostVotedCandidate].candidateName);
-  }
+  } else { removeCandidateFewestVotes(); }
 }
+
+void removeCandidateFewestVotes () {}
