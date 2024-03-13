@@ -15,6 +15,7 @@ void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50],
 void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates);
 void isThereAWinner (Candidate candidates[], int voters, int *indexMostVotedCandidate, int *votesMostVotedCandidate);
 void candidateFewestVotes (Candidate candidates[], int *votesFewestVotedCandidate);
+void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, char nameRemovedCandidates[], int *numberOfCandidatesRemoved);
 
 
 int main(int argc, char const *argv[])
@@ -45,15 +46,14 @@ int main(int argc, char const *argv[])
 
   isThereAWinner (candidates, voters, &indexMostVotedCandidate, &votesMostVotedCandidate);
 
-  int indexRemovedCandidates[numberOfCandidates - 1];
+  char nameRemovedCandidates[numberOfCandidates][50];
+  int numberOfCandidatesRemoved = 0;
 
-  int indexFewestVotedCandidates[numberOfCandidates - 2];
   int votesFewestVotedCandidate = candidates[0].votes;
 
   candidateFewestVotes(candidates, &votesFewestVotedCandidate);
 
-
-  
+  removingCandidates (candidates, votesFewestVotedCandidate, nameRemovedCandidates, &numberOfCandidatesRemoved);
 
 
   return 0;
@@ -145,15 +145,26 @@ void isThereAWinner (Candidate candidates[], int voters, int *indexMostVotedCand
 
   if ( *votesMostVotedCandidate > (float) voters / 2 ) {
     printf("The winner is: %s", candidates[*indexMostVotedCandidate].candidateName);
-  } else { removeCandidateFewestVotes(); }
+  }
 }
 
 void candidateFewestVotes (Candidate candidates[], int *votesFewestVotedCandidate) {
   for (int allCandidatesOneByOne = 0; allCandidatesOneByOne < numberOfCandidates; allCandidatesOneByOne++) {
     int votesOfThisCandidate = candidates[allCandidatesOneByOne].votes;
     
-    if ( votesOfThisCandidate < votesFewestVotedCandidate ) {
-      votesFewestVotedCandidate = votesOfThisCandidate;
+    if ( votesOfThisCandidate < *votesFewestVotedCandidate ) {
+      *votesFewestVotedCandidate = votesOfThisCandidate;
+    }
+  }
+}
+
+void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, char nameRemovedCandidates[], int *numberOfCandidatesRemoved) {
+  for (int allCandidatesOneByOne = 0; allCandidatesOneByOne < numberOfCandidates; allCandidatesOneByOne++) {
+    int votesOfThisCandidate = candidates[allCandidatesOneByOne].votes;
+
+    if ( votesOfThisCandidate == votesFewestVotedCandidate ) {
+      strcpy(nameRemovedCandidates[*numberOfCandidatesRemoved], candidates[allCandidatesOneByOne].candidateName);
+      *numberOfCandidatesRemoved++;
     }
   }
 }
