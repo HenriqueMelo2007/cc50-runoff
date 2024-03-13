@@ -103,6 +103,10 @@ void receivesVotesChecksIfItIsValid (char votersVotes[][numberOfCandidates][50],
 }
 
 void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candidates[], int voters, int numberOfCandidates, int numberOfCandidatesRemoved, char nameRemovedCandidates[]) {
+  for (int recountingFromZero = 0; recountingFromZero < numberOfCandidates; recountingFromZero++) {
+    candidates[recountingFromZero].votes = 0;
+  }
+
   for (int voter = 0; voter < voters; voter++) {
     
     char votersOfVoter[numberOfCandidates][50];
