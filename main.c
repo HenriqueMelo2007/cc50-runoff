@@ -130,9 +130,6 @@ void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candi
       }
 
       for (int possibleVoteOwner = 0; possibleVoteOwner < numberOfCandidates; possibleVoteOwner++) {
-        if ( stopLoop == 0 ) {
-        break;
-        }
 
         int voteOwner = strcmp(voteInOrder, candidates[possibleVoteOwner].candidateName);
 
@@ -143,9 +140,7 @@ void assigningVotes (char votersVotes[][numberOfCandidates][50], Candidate candi
         }
       }
 
-      if ( stopLoop == 0 ) {
-        break;
-      }
+      
 
     }
   }
@@ -177,6 +172,7 @@ void candidateFewestVotes (Candidate candidates[], int *votesFewestVotedCandidat
       *votesFewestVotedCandidate = votesOfThisCandidate;
     }
   }
+
 }
 
 void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, char nameRemovedCandidates[][50], int *numberOfCandidatesRemoved, int numberOfCandidates) {
@@ -185,7 +181,7 @@ void removingCandidates (Candidate candidates[], int votesFewestVotedCandidate, 
 
     if ( votesOfThisCandidate == votesFewestVotedCandidate ) {
       strcpy(nameRemovedCandidates[*numberOfCandidatesRemoved], candidates[allCandidatesOneByOne].candidateName);
-      *numberOfCandidatesRemoved++;
+      (*numberOfCandidatesRemoved)++;
     }
   }
 
