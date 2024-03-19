@@ -14,7 +14,7 @@ An instant runoff election is a voting system in which voters can choose multipl
 
 5. Recount and Majority Verification: After the transfer of votes, a new count is carried out to check whether any candidate obtained an absolute majority of votes. If not, the process of elimination and transfer of votes continues until one candidate reaches an absolute majority.
 
-Este sistema é conhecido por garantir que o candidato vencedor tenha um amplo apoio entre os eleitores, já que leva em consideração as preferências de segunda escolha dos eleitores. Ele é usado em várias eleições em todo o mundo para promover uma representação mais justa e precisa da vontade dos eleitores.
+This system is known for ensuring that the winning candidate has broad support among voters, as it takes into account voters' second choice preferences. It is used in numerous elections around the world to promote a fairer and more accurate representation of the will of voters.
 
 ## Example in VScode terminal:
 
