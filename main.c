@@ -147,15 +147,24 @@ void assigningVotes(char votersVotes[][numberOfCandidates][50], Candidate candid
 
       for (int possibleVoteOwner = 0; possibleVoteOwner < numberOfCandidates; possibleVoteOwner++)
       {
+        if (stopLoop == 0)
+        {
+          break;
+        }
 
         int voteOwner = strcmp(voteInOrder, candidates[possibleVoteOwner].candidateName);
 
         if (voteOwner == 0)
         {
           candidates[possibleVoteOwner].votes += 1;
-          stopLoop = 0;
+          stopLoop = 2;
           break;
         }
+      }
+
+      if (stopLoop == 2)
+      {
+        break;
       }
     }
   }
@@ -211,7 +220,7 @@ void removingCandidates(Candidate candidates[], int votesFewestVotedCandidate, c
 
   if (continueDoing)
   {
-    if (*numberOfCandidatesRemoved == numberOfCandidates || *numberOfCandidatesRemoved == numberOfCandidates - 1)
+    if (*numberOfCandidatesRemoved == numberOfCandidates)
     {
       printf("It is a draw\n");
       continueDoing = false;
