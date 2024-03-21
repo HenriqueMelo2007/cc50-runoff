@@ -19,3 +19,5 @@ This system is known for ensuring that the winning candidate has broad support a
 ## Example in VScode terminal:
 
 ![Demonstration of using the program](preview.png)
+
+In this example with three candidates, at first we have a tie between Henrique and Marcelo.  Both with two votes.  Kaique, being the candidate with the least votes, is removed from the contest and the second option of the voter (or voters in other cases) who had chosen him must be taken into account.  Marcelo, being the second option of the voter who had voted first for Kaique, now obtains one more vote, breaking the tie.  Marcelo is declared the winner with three votes, against two votes for Henrique.
